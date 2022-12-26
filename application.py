@@ -38,7 +38,7 @@ async def generate_random_data(request: Request) -> Iterator[str]:
     while True:
         json_data = json.dumps(
             {
-                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "time": datetime.now().strftime("%H:%M:%S"),
                 "value": random.random() * 100,
             }
         )
@@ -46,6 +46,7 @@ async def generate_random_data(request: Request) -> Iterator[str]:
         await asyncio.sleep(1)
 
 
+# SSE endpoint
 @application.get("/chart-data")
 async def chart_data(request: Request) -> StreamingResponse:
     response = StreamingResponse(generate_random_data(
